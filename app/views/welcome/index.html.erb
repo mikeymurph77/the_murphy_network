@@ -1,4 +1,15 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<div class="text-center">
+  <h5>To prove that you are a member of the Murphy Family,</h5>
+  <h4>What city does Nana and Gramps live in?</h4>
+
+  <%= form_tag welcome_check_path do %>
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="form-group">
+          <%= text_field_tag 'city_check', '', class: 'form-control form-control-lg', style: 'text-align: center' %>
+        </div>
+      </div>
+    </div>
+    <%= submit_tag 'Submit', class: 'btn btn-lg btn-success', style: 'margin-top: 20px' %>
+  <% end %>
+</div>
