@@ -17,7 +17,7 @@
       <tr>
         <td><%= contact.first_name  %> <%= contact.last_name %></td>
         <td><%= contact.email %></td>
-        <td><%= contact.phone %></td>
+        <td><%= contact.readable_phone %></td>
         <td><%= contact.full_address %></td>
         <td><%= link_to 'Edit', edit_contact_path(contact.id), class: 'btn btn-info' %></td>
       </tr>
@@ -25,8 +25,45 @@
   </tbody>
 </table>
 
+<div class="text-center">
+  <%= link_to 'Add Family Member', new_contact_path, class: 'btn btn-lg btn-info' %>
+</div>
+
+<% if session[:index_count] == 0 %>
+  <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Welcome To The Murphy Network</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <strong>What is this?</strong>
+          <p style="margin-left: 20px; color: #616161">A centralized, easy to access, database of Murphy contact information</p>
+
+          <strong>Why?</strong>
+          <p style="margin-left: 20px; color: #616161">Why not? With weddings, events, and everyday contact, wouldn't be nice to know exactly how to contact someone?</p>
+
+          <strong>What should I do now?</strong>
+          <p style="margin-left: 20px; color: #616161">Update your contact information! If you see family members with the wrong information or no information, just add it in!</p>
+
+          <strong>What's to come?</strong>
+          <p style="margin-left: 20px; color: #616161">I was thinking this could be a good place to organize family events (to avoid email chains). If you have any suggestions let me know in the Ideas section or email me directly. You can also vote on current ideas! I'm building this with spare time, so time is limited, but willing to consider all ideas.</p>
+
+          <div class="text-center">
+            <button type="button" class="btn btn-secondary btn-dark center-block" data-dismiss="modal" style="margin-top: 20px">Got It!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <script>
   $(function(){
+    $('#welcomeModal').modal('show')
     $('table').stickyTableHeaders();
   })
 

@@ -1,0 +1,61 @@
+<style>
+  label { font-weight: bold }
+</style>
+
+<%= form_for @contact do |f| %>
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone %>
+    <%= f.telephone_field :phone, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address_line_1 %>
+    <%= f.text_field :address_line_1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address_line_2 %>
+    <%= f.text_field :address_line_2, class: 'form-control' %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'form-control' %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+    </div>
+    <div class="form-group col-md-2">
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label :birthday_month, 'Birthday' %>
+      <%= f.select :birthday_month, options_for_select(MONTH_HASH, @contact.birthday_month), class: 'form-control' %>
+      <%= f.select :birthday_day, options_for_select((1..31).map {|i| [i,i] }, @contact.birthday_day), class: 'form-control' %>
+    </div>
+  </div>
+
+  <%= f.submit class: 'btn btn-lg btn-success' %>
+  <%= link_to 'Cancel', contacts_path, class: 'btn btn-lg btn-danger' %>
+<% end %>

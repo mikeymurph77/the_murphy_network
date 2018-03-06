@@ -1,28 +1,29 @@
 class ContactsController < ApplicationController
   def index
     @contacts = Contact.all.order(:first_name)
+    session[:index_count] = session[:index_count].present? ? session[:index_count] + 1 : 0
   end
 
   def show
   end
 
+  def new
+    @contact = Contact.new
+  end
+
   def edit
     @contact = Contact.find(params[:id])
+  end
 
-    @months = {
-      'January' => '1',
-      'February' => '2',
-      'March' => '3',
-      'April' => '4',
-      'May' => '5',
-      'June' => '6',
-      'July' => '7',
-      'August' => '8',
-      'September' => '9',
-      'October' => '10',
-      'November' => '11',
-      'December' => '12',
-    }
+  def create
+    contact = Contact.new(contact_params)
+
+    if contact.save
+      flash[:success] = 'Contact Saved!'
+      redirect_to contacts_path
+    else
+      render :edit
+    end
   end
 
   def update
