@@ -15,6 +15,16 @@
         <%= image_tag 'murphy-network.png', size: "30x30", class: "d-inline-block align-top", alt: "" %>
         The Murphy Network
       </a>
+
+      <% if session[:verified] = true %>
+        <div pull-left>
+          <div class="row" style="margin-right: 20px">
+            <%= link_to 'Contacts', contacts_path, class: 'nav-link', style: 'color: #616161' %>
+            <%= link_to 'Ideas', ideas_path, class: 'nav-link', style: 'color: #616161' %>
+            <%= link_to 'FAQ', faq_path, class: 'nav-link', style: 'color: #616161' %>
+          </div>
+        </div>
+      <% end %>
     </nav>
 
     <div class="container">

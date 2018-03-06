@@ -9,4 +9,8 @@ class WelcomeController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def faq
+    redirect_to root_path and return unless session[:verified] = true
+  end
 end
