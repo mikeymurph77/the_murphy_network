@@ -1,4 +1,32 @@
-<script src="https://unpkg.com/sticky-table-headers"></script>
+<% content_for :head_scripts do %>
+  <script src="https://unpkg.com/sticky-table-headers"></script>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card light mb-3">
+      <div class="card-header"><i class="fas fa-birthday-cake"></i> <%= Date::MONTHNAMES[Date.today.month] %> Birthdays</div>
+      <div class="card-body">
+        <% @upcoming_birthdays.each do |user| %>
+          <%= user.full_name %> - <%= Date::MONTHNAMES[Date.today.month] %> <%= user.birthday_day.to_i.ordinalize %>
+        <% end %>
+
+        <br>
+        <div class="text-center" style="margin-top: 30px">
+          <small><em>Edit your contact to add your birthday!</em></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card light mb-3">
+      <div class="card-header"><i class="far fa-calendar-alt"></i> Upcoming Events</div>
+      <div class="card-body">
+        <em>Feature coming soon...</em>
+      </div>
+    </div>
+  </div>
+</div>
 
 <input type="text" class="form-control form-control-lg" id="myInput" onkeyup="myFunction()" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search for names.." style="margin-bottom: 10px">
 
@@ -17,7 +45,7 @@
       <tr>
         <td><%= contact.first_name  %> <%= contact.last_name %></td>
         <td><%= contact.email %></td>
-        <td><%= contact.readable_phone %></td>
+        <td><span style="white-space: nowrap;"><%= contact.readable_phone %></span></td>
         <td><%= contact.full_address %></td>
         <td><%= link_to 'Edit', edit_contact_path(contact.id), class: 'btn btn-info' %></td>
       </tr>
@@ -53,7 +81,7 @@
           <p style="margin-left: 20px; color: #616161">I was thinking this could be a good place to organize family events (to avoid email chains). If you have any suggestions let me know in the Ideas section or email me directly. You can also vote on current ideas! I'm building this with spare time, so time is limited, but willing to consider all ideas.</p>
 
           <div class="text-center">
-            <button type="button" class="btn btn-secondary btn-dark center-block" data-dismiss="modal" style="margin-top: 20px">Got It!</button>
+            <button type="button" class="btn btn-secondary btn-dark center-block" data-dismiss="modal" style="margin-top: 20px; padding-bottom: 50px">Got It!</button>
           </div>
         </div>
       </div>

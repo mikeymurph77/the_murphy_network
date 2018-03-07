@@ -6,6 +6,22 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <%= yield :head_scripts %>
+
+    <style>
+      .nav-link-ideas {
+        animation: glow 1s infinite alternate;
+      }
+
+      @keyframes glow {
+        to {
+          text-shadow: 0 0 10px grey;
+        }
+      }
+    </style>
+
+    <%= yield :styles %>
   </head>
 
   <body>
@@ -20,7 +36,7 @@
         <div pull-left>
           <div class="row" style="margin-right: 20px">
             <%= link_to 'Contacts', contacts_path, class: 'nav-link', style: 'color: #616161' %>
-            <%= link_to 'Ideas', ideas_path, class: 'nav-link', style: 'color: #616161' %>
+            <%= link_to 'Ideas', ideas_path, class: 'nav-link nav-link-ideas', style: 'color: #616161' %>
             <%= link_to 'FAQ', faq_path, class: 'nav-link', style: 'color: #616161' %>
           </div>
         </div>
@@ -31,5 +47,7 @@
       <%= render partial: 'shared/flash_messages' %>
       <%= yield %>
     </div>
+
+    <%= yield :scripts %>
   </body>
 </html>

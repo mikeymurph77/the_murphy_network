@@ -2,6 +2,7 @@ class ContactsController < ApplicationController
   def index
     @contacts = Contact.all.order(:first_name)
     session[:index_count] = session[:index_count].present? ? session[:index_count] + 1 : 0
+    @upcoming_birthdays = @contacts.where(birthday_month: Time.now.month)
   end
 
   def show
