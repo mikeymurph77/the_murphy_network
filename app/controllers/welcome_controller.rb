@@ -1,4 +1,6 @@
 class WelcomeController < ApplicationController
+  skip_before_action :check_verification
+
   def check
     if params[:city_check].try(:downcase).include? 'quincy'
       flash[:success] = 'Welcome!'
