@@ -1,1 +1,151 @@
-<h1>Coming Soon!</h1>
+<% content_for :styles do %>
+  <style>
+    .vote-action {
+      color: #afafaf;
+      cursor: pointer;
+    }
+
+    .filter-status {
+      cursor: pointer;
+    }
+
+    .status {
+      padding: 3px 10px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    .status-idea {
+      color: #0c5460;
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+    }
+
+    .status-in-progress {
+      color: #856404;
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+    }
+
+    .status-done {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+
+    .status-archived {
+      color: #383d41;
+      background-color: #e2e3e5;
+      border-color: #d6d8db;
+    }
+
+    .remove-filter {
+      color: #818182;
+      background-color: #fefefe;
+      border-color: #fdfdfe;
+    }
+  </style>
+<% end %>
+
+<h1>Ideas</h1>
+<div class="alert alert-info text-center" role="alert">
+  <span style="font-size: 18px">Create and vote on ideas you wish to see. I'll use this as a guide for building out future features.</span>
+  <div class="text-center" style="margin-top: 20px">
+    <%= link_to 'Create a new idea', new_idea_path, class: 'btn btn-info' %>
+  </div>
+</div>
+
+<div class="text-center" style="margin-bottom: 40px">
+  <strong>Filter Options<br>
+    <%= link_to 'Idea', ideas_path(filter: 'idea'), class: 'status filter-status status-idea' %>
+    <%= link_to 'In Progress', ideas_path(filter: 'in_progress'), class: 'status filter-status status-in-progress' %>
+    <%= link_to 'Done', ideas_path(filter: 'done'), class: 'status filter-status status-done' %>
+    <%= link_to 'Archived', ideas_path(filter: 'archived'), class: 'status filter-status status-archived' %>
+    <%= link_to 'Remove Filters', ideas_path, class: 'status filter-status remove-filter' %>
+  </strong>
+</div>
+<hr>
+<% @ideas.each do |idea| %>
+  <div class="row idea-content-block" data-idea-id="<%= idea.id %>">
+    <div class="col-1">
+      <div class="text-center">
+        <div><i class="fas fa-arrow-circle-up fa-2x vote-action" id="up" data-value="0"></i></div>
+        <div><strong><span id="display-votes-<%= idea.id %>"><%= idea.votes %></span></strong></div>
+        <div><i class="fas fa-arrow-circle-down fa-2x vote-action" id="down" data-value="0"></i></div>
+      </div>
+    </div>
+    <div class="col-11">
+      <div style="font-weight: bold; font-size: 18px">
+        <%= idea.title %> <span class="status status-<%= idea.status.downcase.parameterize %>"><%= idea.status %></span>
+      </div>
+      <div style="color: #5f5e5e">
+        <%= markdown(idea.description) %>
+      </div>
+      <div style="font-size: 14px; color: #9c9c9c">Posted By: <%= idea.poster %></div>
+    </div>
+  </div>
+  <hr>
+<% end %>
+
+<div class="text-center" style="margin-top: 20px">
+  <%= link_to 'Create a new idea', new_idea_path, class: 'btn btn-info' %>
+</div>
+
+<% content_for :scripts do %>
+  <script>
+    $(function() {
+      $('.vote-action').click(function() {
+        voteBtnClicked($(this));
+      });
+    })
+
+    function voteBtnClicked(voteButtonClicked) {
+      var upVoteBtn = $('#up'),
+          downVoteBtn = $('#down'),
+          actionDirection = voteButtonClicked.attr('id');
+
+      if (actionDirection == 'up') {
+        if (voteButtonClicked.attr('data-value') === '1') {
+          return false;
+        }
+        voteButtonClicked.css('color', '#89c542');
+        voteButtonClicked.attr('data-value', '1');
+
+        postVote(voteButtonClicked, actionDirection);
+
+        if (downVoteBtn.attr('data-value') == '1') {
+          downVoteBtn.attr('data-value', '0');
+          downVoteBtn.css('color', '#afafaf')
+        }
+      } else {
+        if (voteButtonClicked.attr('data-value') === '1') {
+          return false;
+        }
+        voteButtonClicked.css('color', '#ec5555');
+        voteButtonClicked.attr('data-value', '1');
+
+        postVote(voteButtonClicked, actionDirection);
+
+        if (upVoteBtn.attr('data-value') == '1') {
+          upVoteBtn.attr('data-value', '0');
+          upVoteBtn.css('color', '#afafaf')
+        }
+      }
+    }
+
+    function postVote(voteButtonClicked, actionDirection) {
+      $.ajax({
+        method: "POST",
+        url: "/ideas/vote",
+        dataType: 'JSON',
+        data: {
+          id: voteButtonClicked.closest('.idea-content-block').attr('data-idea-id'),
+          direction: actionDirection
+        }
+      })
+      .success(function(data) {
+        $('#display-votes-' + data.id).empty().text(data.votes)
+      });
+    }
+  </script>
+<% end %>

@@ -6,5 +6,9 @@ Rails.application.routes.draw do
   post '/welcome/check', to: 'welcome#check'
 
   resources :contacts
-  resources :ideas
+  resources :ideas do
+    collection do
+      post '/vote', to: 'ideas#vote'
+    end
+  end
 end
