@@ -11,6 +11,11 @@
           <%= user.full_name %> - <%= Date::MONTHNAMES[Date.today.month] %> <%= user.birthday_day.to_i.ordinalize %>
         <% end %>
 
+        <% if @upcoming_birthdays.empty? %>
+          <div class="text-center" style="margin-top: 30px">
+            - No Birthdays This Month -
+          </div>
+        <% end %>
         <br>
         <div class="text-center" style="margin-top: 30px">
           <small><em>Edit your contact to add your birthday!</em></small>
@@ -54,7 +59,7 @@
 </table>
 
 <div class="text-center">
-  <%= link_to 'Add Family Member', new_contact_path, class: 'btn btn-lg btn-info' %>
+  <%= link_to 'Add Family Member', new_contact_path, class: 'btn btn-lg btn-info', style: 'margin-bottom: 30px' %>
 </div>
 
 <% if session[:index_count] == 0 %>
@@ -81,7 +86,7 @@
           <p style="margin-left: 20px; color: #616161">I was thinking this could be a good place to organize family events (to avoid email chains). If you have any suggestions let me know in the Ideas section or email me directly. You can also vote on current ideas! I'm building this with spare time, so time is limited, but willing to consider all ideas.</p>
 
           <div class="text-center">
-            <button type="button" class="btn btn-secondary btn-dark center-block" data-dismiss="modal" style="margin-top: 20px; padding-bottom: 50px">Got It!</button>
+            <button type="button" class="btn btn-secondary btn-dark center-block" data-dismiss="modal" style="margin-top: 20px">Got It!</button>
           </div>
         </div>
       </div>
