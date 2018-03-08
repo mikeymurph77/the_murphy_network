@@ -10,7 +10,7 @@ class IdeasController < ApplicationController
     when 'archived'
       @ideas = Idea.where(status: 'Archived').order('votes::integer DESC')
     else
-      @ideas = Idea.where(status: ['Idea', 'In Progress', 'Done']).order('votes::integer DESC')
+      @ideas = Idea.where(status: ['Idea', 'In Progress']).order('votes::integer DESC')
     end
   end
 

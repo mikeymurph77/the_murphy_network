@@ -65,6 +65,7 @@
   </strong>
 </div>
 <hr>
+
 <% @ideas.each do |idea| %>
   <div class="row idea-content-block" data-idea-id="<%= idea.id %>">
     <div class="col-1">
@@ -85,6 +86,12 @@
     </div>
   </div>
   <hr>
+<% end %>
+
+<% if @ideas.empty? %>
+  <div class="text-center">
+    <h4>No ideas have been marked as <span class="status status-<%= params[:filter].gsub("_", "-") %>"><%= params[:filter].titleize %></span></h4>
+  </div>
 <% end %>
 
 <div class="text-center" style="margin-top: 20px">
