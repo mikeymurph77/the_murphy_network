@@ -8,7 +8,7 @@
       <div class="card-header"><i class="fas fa-birthday-cake"></i> <%= Date::MONTHNAMES[Date.today.month] %> Birthdays</div>
       <div class="card-body">
         <% @upcoming_birthdays.each do |user| %>
-          <p><%= user.full_name %> - <%= Date::MONTHNAMES[Date.today.month] %> <%= user.birthday_day.to_i.ordinalize %></p>
+          <p style="white-space: nowrap"><%= user.full_name %> - <%= Date::MONTHNAMES[Date.today.month] %> <%= user.birthday_day.to_i.ordinalize %></p>
         <% end %>
 
         <% if @upcoming_birthdays.empty? %>
